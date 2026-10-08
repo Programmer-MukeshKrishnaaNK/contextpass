@@ -1,0 +1,331 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   ContextPass design tokens
+   Paper, ink, and one oxide accent — the colour of a seal.
+   Oxide is reserved for the user's authority and for anything
+   waiting on their decision. Nothing else.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --paper: #f1eee6;
+  --paper-2: #e9e5da;
+  /* Card stock: the pass is printed on slightly brighter paper. */
+  --stock: #f8f6f0;
+  --ink: #16150f;
+  --ink-2: #3a3832;
+  --muted: #6b675d;
+  --line: #d3cdbf;
+  --line-soft: #e0dbcf;
+
+  --oxide: #b33d15;
+  --oxide-soft: #f0dccf;
+
+  --active: #1d6b44;
+  --expired: #8a857a;
+
+  /* Inverted sections */
+  --night: #16150f;
+  --night-line: #34322a;
+  --night-text: #ece8dd;
+  --night-muted: #9d988b;
+  --oxide-night: #e66f42;
+
+  --gutter: clamp(1rem, 4vw, 3rem);
+  /* One vertical rhythm for every landing section. */
+  --section-y: clamp(5rem, 9vw, 8.5rem);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-stock: var(--stock);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-oxide: var(--oxide);
+  --color-oxide-soft: var(--oxide-soft);
+  --color-active: var(--active);
+  --color-expired: var(--expired);
+  --color-night: var(--night);
+  --color-night-line: var(--night-line);
+  --color-night-text: var(--night-text);
+  --color-night-muted: var(--night-muted);
+  --color-oxide-night: var(--oxide-night);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, sans-serif;
+  --font-body: var(--font-bricolage), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-sans: var(--font-body);
+
+  --ease-out: var(--ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Type scale
+   Bricolage Grotesque carries the voice at its natural width.
+   Optical size follows font-size (font-optical-sizing: auto), so
+   large settings pick up the sharper, ink-trapped display cut
+   while body text stays calm. Hierarchy comes from size, weight
+   and spacing — display sizes get lighter as they get larger.
+   ───────────────────────────────────────────────────────────── */
+
+@utility type-hero {
+  font-family: var(--font-display);
+  line-height: 0.9;
+  letter-spacing: -0.034em;
+  font-weight: 420;
+  text-wrap: balance;
+}
+
+@utility type-display {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.6vw, 5rem);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  font-weight: 450;
+  text-wrap: balance;
+}
+
+@utility type-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  font-weight: 480;
+  text-wrap: balance;
+}
+
+@utility type-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3125rem, 1.8vw, 1.625rem);
+  line-height: 1.12;
+  letter-spacing: -0.016em;
+  font-weight: 540;
+}
+
+@utility type-subtitle {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  letter-spacing: -0.008em;
+  font-weight: 560;
+}
+
+@utility type-lede {
+  font-family: var(--font-body);
+  font-size: clamp(1.1875rem, 1.6vw, 1.375rem);
+  line-height: 1.36;
+  letter-spacing: -0.01em;
+  font-weight: 420;
+  text-wrap: pretty;
+}
+
+@utility type-body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  font-weight: 400;
+  text-wrap: pretty;
+}
+
+@utility type-small {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  font-weight: 400;
+  text-wrap: pretty;
+}
+
+/* Human UI labels: field names, section names, states. Sentence case. */
+@utility type-label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  letter-spacing: 0.004em;
+  font-weight: 560;
+}
+
+/* Large figures: light and tabular so counters never jitter. */
+@utility type-numeral {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 6.5vw, 6rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Buttons. Uppercase is reserved for actions. */
+@utility type-action {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  line-height: 1;
+  letter-spacing: 0.055em;
+  font-weight: 620;
+  text-transform: uppercase;
+}
+
+/* ── The technical layer: IBM Plex Mono, machine-facing only ── */
+
+/* IDs, addresses, hashes, timestamps. */
+@utility type-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+/* System marks: status codes and the printed headers of a pass. */
+@utility type-system {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--oxide);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--oxide);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.on-night :focus-visible {
+  outline-color: var(--oxide-night);
+}
+
+/* Dashed outline = a guest. AI apps are always drawn this way. */
+.guest-outline {
+  border: 1px dashed currentColor;
+}
+
+/* Security-document microprint. Decorative only. */
+.microprint {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+  /* Never let the repeated line widen its container. */
+  contain: inline-size;
+}
+
+/* The pass: notches punched at its perforation (--notch-y). */
+.pass-notch {
+  --notch: 10px;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 var(--notch-y, 50%), #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--notch-y, 50%), #0000 98%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 0 var(--notch-y, 50%), #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--notch-y, 50%), #0000 98%, #000) right / 51% 100% no-repeat;
+}
+
+.perforation {
+  background-image: linear-gradient(90deg, currentColor 50%, transparent 0);
+  background-size: 6px 1px;
+  background-repeat: repeat-x;
+  height: 1px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Motion — only to communicate state
+   ───────────────────────────────────────────────────────────── */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* A decision being pressed onto paper: settles, does not bounce. */
+@keyframes stamp {
+  from { opacity: 0; transform: rotate(-1.5deg) scale(1.06); }
+  to { opacity: 1; transform: rotate(-1.5deg) scale(1); }
+}
+
+@keyframes live {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--live-color, var(--active)) 45%, transparent); }
+  60% { box-shadow: 0 0 0 5px transparent; }
+}
+
+/* A request travelling up a connector lane. */
+@keyframes lane {
+  0% { top: 100%; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: -0.75rem; opacity: 0; }
+}
+
+@keyframes ticker {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.animate-rise { animation: rise 0.6s var(--ease-out) both; }
+.animate-stamp { animation: stamp 0.32s var(--ease-out) both; }
+.animate-live { animation: live 2.4s ease-out infinite; }
+.animate-ticker { animation: ticker 0.4s var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Sign-in modal (Privy). It inherits Bricolage; here it also takes
+   ContextPass's square-ish corners and ink backdrop, so connecting
+   feels like part of the product rather than a third-party popup.
+   Privy sets these variables inline, hence !important.
+   ───────────────────────────────────────────────────────────── */
+
+#privy-dialog,
+#privy-modal-content {
+  --privy-border-radius-xs: 0px !important;
+  --privy-border-radius-sm: 2px !important;
+  --privy-border-radius-md: 2px !important;
+  --privy-border-radius-mdlg: 2px !important;
+  --privy-border-radius-lg: 2px !important;
+  --privy-color-background: var(--stock) !important;
+  --privy-color-background-2: var(--paper) !important;
+  --privy-color-border-default: var(--line) !important;
+  font-family: var(--font-body);
+}

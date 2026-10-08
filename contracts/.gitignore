@@ -1,0 +1,8 @@
+# Foundry build output
+cache/
+out/
+# Broadcast logs hold local run data; keep them out of the repo
+broadcast/
+# Never commit keys or local config
+.env
+.env.*
